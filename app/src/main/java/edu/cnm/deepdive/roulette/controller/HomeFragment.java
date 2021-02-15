@@ -37,11 +37,24 @@ return binding.getRoot();
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-//    final TextView rouletteValue = root.findViewById(R.id.roulette_value);
+
     homeViewModel.getRouletteValue().observe(getViewLifecycleOwner(), new Observer<String>() {
       @Override
       public void onChanged(String s) {
+
         binding.rouletteValue.setText(s);
+      }
+    });
+    homeViewModel.getPocketIndex().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+      @Override
+      public void onChanged(Integer pocketIdex) {
+        float centerX = binding.rouletteWheel.getWidth() / 2f;
+        float centerY = binding.rouletteWheel.getHeight() / 2f;
+        float currentRotation = binding.rouletteWheel.getRotation();
+        float finalRotation = -360 * pocketIdex / 38f;
+        binding.rouletteWheel.setPivotX(centerX);
+        binding.rouletteWheel.setPivotY(centerY);
+
       }
     });
   }
