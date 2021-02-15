@@ -1,28 +1,40 @@
 package edu.cnm.deepdive.roulette.viewmodel;
 
+import android.app.Application;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+import edu.cnm.deepdive.roulette.R;
 import java.security.SecureRandom;
 import java.util.Random;
 
-public class HomeViewModel extends ViewModel {
+public class HomeViewModel extends AndroidViewModel {
 
   private final MutableLiveData<String> rouletteValue;
+  private final MutableLiveData<Integer> pocketIndex;
   private final Random rng;
+  private final String[] pocketVals;
 
-  public HomeViewModel() {
-    rouletteValue = new MutableLiveData<>("00");
+  public HomeViewModel(@NonNull Application application) {
+    super(application);
+    rouletteValue = new MutableLiveData<>();
     rng = new SecureRandom();
+    pocketIndex = new MutableLiveData<>();
+    pocketVals = application.getResources().getStringArray(R.array.pocket_val);
   }
 
   public LiveData<String> getRouletteValue() {
-
     return rouletteValue;
   }
 
+  public LiveData<Integer> getPocketIndex() {
+    return pocketIndex;
+  }
+
   public void spinWheel() {
-    int selection = rng.nextInt(38  );
-    rouletteValue.setValue((selection < 37) ? String.valueOf(selection): "00");
+    int selection = rng.nextInt(pocketVals.length);
+    pocketIndex.setValue(selection);
+    rouletteValue.setValue(pocketVals[selection]);
   }
 }
