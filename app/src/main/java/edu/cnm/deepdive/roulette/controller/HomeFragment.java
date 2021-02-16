@@ -19,6 +19,13 @@ import java.security.SecureRandom;
 
 public class HomeFragment extends Fragment {
 
+  private static final int MIN_ROTATION_TIME = 2000;
+  public static final int MAX_ROTATION_TIME = 3000;
+  public static final int DEGREES_PER_REVOLUTION = 360;
+  public static final int MIN_FULL_ROTATIONS = 3;
+  public static final int DEGREES_PER_REVOLUTIONS = 360;
+  public static final int MAX_FULL_ROTATIONS = 3;
+
   private HomeViewModel homeViewModel;
   private FragmentHomeBinding binding;
   private boolean spinning;
@@ -67,8 +74,9 @@ public class HomeFragment extends Fragment {
         binding.rouletteWheel.setPivotX(centerX);
         binding.rouletteWheel.setPivotY(centerY);
         RotateAnimation rotation = new RotateAnimation(
-            0, (finalRotation - currentRotation) - 360 * (3 + rng.nextInt(3)), centerX, centerY);
-        rotation.setDuration(2000 + rng.nextInt(3000));
+            0, (finalRotation - currentRotation)
+            - DEGREES_PER_REVOLUTIONS * (MIN_FULL_ROTATIONS + rng.nextInt(MAX_FULL_ROTATIONS)), centerX, centerY);
+        rotation.setDuration(MIN_ROTATION_TIME + rng.nextInt(MAX_ROTATION_TIME));
         rotation.setAnimationListener(new AnimationFinalizer(finalRotation));
         binding.rouletteWheel.startAnimation(rotation);
       }

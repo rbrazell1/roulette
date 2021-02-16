@@ -13,8 +13,8 @@ public class HomeViewModel extends AndroidViewModel {
 
   private final MutableLiveData<String> rouletteValue;
   private final MutableLiveData<Integer> pocketIndex;
-  private final Random rng;
   private final String[] pocketVals;
+  private final Random rng;
 
   public HomeViewModel(@NonNull Application application) {
     super(application);
