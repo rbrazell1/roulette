@@ -24,7 +24,7 @@
     android:id="@+id/roulette_value"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-android:layout_margin="@dimen/half_static_spacing"
+    android:layout_margin="@dimen/half_static_spacing"
     android:textSize="32sp"
     app:layout_constraintBottom_toTopOf="@id/spin_wheel"
     app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +43,6 @@ android:layout_margin="@dimen/half_static_spacing"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"/>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
