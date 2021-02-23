@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import edu.cnm.deepdive.roulette.databinding.FragmentPlayBinding;
@@ -42,7 +43,8 @@ public class PlayFragment extends Fragment {
     binding = FragmentPlayBinding.inflate(inflater, container, false);
     binding.spinWheel.setOnClickListener((view) -> spinWheel());
     binding.placeWager.setOnClickListener((view) -> {
-
+      Navigation.findNavController(binding.getRoot())
+          .navigate(PlayFragmentDirections.actionNavigationPlayToNavigationWager());
     });
     return binding.getRoot();
   }
