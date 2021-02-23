@@ -5,7 +5,7 @@
   <string name="title_notifications">Notifications</string>
   <string name="spin_button">Spin!</string>
 
-  <string-array name="pocket_val">
+  <string-array name="pocket_values">
 
     <item>00</item>
     <item>27</item>

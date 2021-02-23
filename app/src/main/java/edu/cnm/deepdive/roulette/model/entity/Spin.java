@@ -19,7 +19,7 @@ public class Spin {
   private Date timestamp = new Date();
 
   @ColumnInfo(index = true)
-  private Integer value;
+  private String value;
 
   public long getId() {
     return id;
@@ -38,11 +38,11 @@ public class Spin {
     this.timestamp = timestamp;
   }
 
-  public Integer getValue() {
+  public String getValue() {
     return value;
   }
 
-  public void setValue(Integer value) {
+  public void setValue(String value) {
     this.value = value;
   }
 

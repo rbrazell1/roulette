@@ -12,7 +12,7 @@ import edu.cnm.deepdive.roulette.model.dao.WagerDao;
 import edu.cnm.deepdive.roulette.model.entity.Spin;
 import edu.cnm.deepdive.roulette.model.entity.Wager;
 import edu.cnm.deepdive.roulette.model.type.Color;
-import java.util.Collections;
+import edu.cnm.deepdive.roulette.service.RouletteDatabase.Converters;
 import java.util.Date;
 
 @Database(
@@ -20,9 +20,7 @@ import java.util.Date;
     version = 1,
     exportSchema = true
 )
-
-@TypeConverters(value = {Collections.class, Color.class})
-
+@TypeConverters(value = {Converters.class, Color.class})
 public abstract class RouletteDatabase extends RoomDatabase {
 
   private static final String DB_NAME = "roulette_db";
