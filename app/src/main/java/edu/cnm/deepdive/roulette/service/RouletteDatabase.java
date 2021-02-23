@@ -44,14 +44,14 @@ public abstract class RouletteDatabase extends RoomDatabase {
 
     private static final RouletteDatabase INSTANCE =
         Room.databaseBuilder(context, RouletteDatabase.class, DB_NAME)
-        .build();
+            .build();
   }
 
   public static class Converters {
 
     @TypeConverter
-    public static Long dateToLong (Date value) {
-      return  (value != null) ? value.getTime() : null;
+    public static Long dateToLong(Date value) {
+      return (value != null) ? value.getTime() : null;
     }
 
     @TypeConverter

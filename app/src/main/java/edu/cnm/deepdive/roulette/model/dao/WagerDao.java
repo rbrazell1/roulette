@@ -42,8 +42,7 @@ public interface WagerDao {
   Single<Integer> delete(Collection<Wager> wager);
 
   @Query("SELECT * FROM Wager WHERE spin_id = :spinId")
-  LiveData<List<Wager>> selectBySpin(Long spinId);
-
+  LiveData<List<Wager>> selectBySpin(long spinId);
 
 
 }
