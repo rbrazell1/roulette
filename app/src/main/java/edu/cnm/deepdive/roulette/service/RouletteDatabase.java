@@ -17,7 +17,8 @@ import java.util.Date;
 
 @Database(
     entities = {Spin.class, Wager.class},
-    version = 1
+    version = 1,
+    exportSchema = true
 )
 
 @TypeConverters(value = {Collections.class, Color.class})

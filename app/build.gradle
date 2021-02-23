@@ -13,6 +13,15 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        'room.schemaLocation': "$projectDir/schemas".toString()
+                ]
+            }
+        }
+
     }
 
     buildTypes {
@@ -73,7 +82,7 @@ dependencies {
     // Room Components
     def roomVersion = '2.2.6'
     implementation "androidx.room:room-runtime:$roomVersion"
-    annotationProcessor "androidx.room:-room-compiler:$roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-rxjava2:$roomVersion"
 
     // Stetho (inspection)
