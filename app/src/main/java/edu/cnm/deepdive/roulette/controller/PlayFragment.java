@@ -13,11 +13,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import edu.cnm.deepdive.roulette.databinding.FragmentHomeBinding;
-import edu.cnm.deepdive.roulette.viewmodel.HomeViewModel;
+import edu.cnm.deepdive.roulette.databinding.FragmentPlayBinding;
+import edu.cnm.deepdive.roulette.viewmodel.PlayViewModel;
 import java.security.SecureRandom;
 
-public class HomeFragment extends Fragment {
+public class PlayFragment extends Fragment {
 
   private static final int MIN_ROTATION_TIME = 2000;
   public static final int MAX_ROTATION_TIME = 3000;
@@ -26,8 +26,8 @@ public class HomeFragment extends Fragment {
   public static final int DEGREES_PER_REVOLUTIONS = 360;
   public static final int MAX_FULL_ROTATIONS = 3;
 
-  private HomeViewModel homeViewModel;
-  private FragmentHomeBinding binding;
+  private PlayViewModel playViewModel;
+  private FragmentPlayBinding binding;
   private boolean spinning;
   private SecureRandom rng;
 
@@ -39,8 +39,11 @@ public class HomeFragment extends Fragment {
 
   public View onCreateView(@NonNull LayoutInflater inflater,
       ViewGroup container, Bundle savedInstanceState) {
-    binding = FragmentHomeBinding.inflate(inflater, container, false);
+    binding = FragmentPlayBinding.inflate(inflater, container, false);
     binding.spinWheel.setOnClickListener((view) -> spinWheel());
+    binding.placeWager.setOnClickListener((view) -> {
+
+    });
     return binding.getRoot();
   }
 
@@ -49,19 +52,20 @@ public class HomeFragment extends Fragment {
       spinning = true;
       binding.spinWheel.setEnabled(false);
       binding.rouletteValue.setVisibility(View.INVISIBLE);
-      homeViewModel.spinWheel();
+      playViewModel.spinWheel();
     }
   }
 
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-    getLifecycle().addObserver(homeViewModel);
-    homeViewModel.getRouletteValue().observe(getViewLifecycleOwner(),
+    //noinspection ConstantConditions
+    playViewModel = new ViewModelProvider(getActivity()).get(PlayViewModel.class);
+    getLifecycle().addObserver(playViewModel);
+    playViewModel.getRouletteValue().observe(getViewLifecycleOwner(),
         (s) -> binding.rouletteValue.setText(s));
-    homeViewModel.getPocketIndex().observe(getViewLifecycleOwner(), this::startAnimation);
-    homeViewModel.getThrowable().observe(getViewLifecycleOwner(), (throwable) -> {
+    playViewModel.getPocketIndex().observe(getViewLifecycleOwner(), this::startAnimation);
+    playViewModel.getThrowable().observe(getViewLifecycleOwner(), (throwable) -> {
       if (throwable != null) {
         //noinspection ConstantConditions
         Snackbar.make(getContext(), binding.getRoot(), throwable.getMessage(),

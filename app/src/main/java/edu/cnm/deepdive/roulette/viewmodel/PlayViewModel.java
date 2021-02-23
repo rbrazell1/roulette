@@ -16,7 +16,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import java.security.SecureRandom;
 import java.util.Random;
 
-public class HomeViewModel extends AndroidViewModel implements LifecycleObserver {
+public class PlayViewModel extends AndroidViewModel implements LifecycleObserver {
 
   public static final int POCKET_ON_WHEEL = 38;
 
@@ -28,7 +28,7 @@ public class HomeViewModel extends AndroidViewModel implements LifecycleObserver
   private final SpinRepository repository;
   private final CompositeDisposable pending;
 
-  public HomeViewModel(@NonNull Application application) {
+  public PlayViewModel(@NonNull Application application) {
     super(application);
     rouletteValue = new MutableLiveData<>();
     rng = new SecureRandom();
