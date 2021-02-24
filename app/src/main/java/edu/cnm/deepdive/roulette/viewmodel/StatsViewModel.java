@@ -20,5 +20,4 @@ public class StatsViewModel extends AndroidViewModel {
   public LiveData<List<ValueCount>> getCounts() {
     return repository.getCounts();
   }
-
 }

@@ -9,6 +9,9 @@
   <string name="spin_button">Spin!</string>
   <string name="hello_blank_fragment">Hello blank fragment</string>
   <string name="long_title_wager">Roulette: Wager</string>
+  <string name="pocket_header">Pocket</string>
+  <string name="count_header">Count</string>
+  <string name="percent_of_total_header">% of total</string>
   <!-- TODO: Remove or change this placeholder text -->
   <string-array name="pocket_values">
 
