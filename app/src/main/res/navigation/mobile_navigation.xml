@@ -17,16 +17,16 @@
   </fragment>
 
   <fragment
-    android:id="@+id/navigation_dashboard"
+    android:id="@+id/navigation_history"
     android:label="@string/long_title_history"
-    android:name="edu.cnm.deepdive.roulette.controller.DashboardFragment"
-    tools:layout="@layout/fragment_dashboard"/>
+    android:name="edu.cnm.deepdive.roulette.controller.HistoryFragment"
+    tools:layout="@layout/fragment_history"/>
 
   <fragment
-    android:id="@+id/navigation_notifications"
+    android:id="@+id/navigation_stats"
     android:label="@string/long_title_stats"
-    android:name="edu.cnm.deepdive.roulette.controller.NotificationsFragment"
-    tools:layout="@layout/fragment_notifications"/>
+    android:name="edu.cnm.deepdive.roulette.controller.StatsFragment"
+    tools:layout="@layout/fragment_stats"/>
 
   <fragment
     android:id="@+id/navigation_wager"

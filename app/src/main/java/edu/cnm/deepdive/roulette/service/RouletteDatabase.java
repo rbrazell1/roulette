@@ -8,15 +8,18 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 import edu.cnm.deepdive.roulette.model.dao.SpinDao;
+import edu.cnm.deepdive.roulette.model.dao.StatsDao;
 import edu.cnm.deepdive.roulette.model.dao.WagerDao;
 import edu.cnm.deepdive.roulette.model.entity.Spin;
 import edu.cnm.deepdive.roulette.model.entity.Wager;
 import edu.cnm.deepdive.roulette.model.type.Color;
+import edu.cnm.deepdive.roulette.model.view.ValueCount;
 import edu.cnm.deepdive.roulette.service.RouletteDatabase.Converters;
 import java.util.Date;
 
 @Database(
     entities = {Spin.class, Wager.class},
+    views = {ValueCount.class},
     version = 1,
     exportSchema = true
 )
@@ -38,6 +41,8 @@ public abstract class RouletteDatabase extends RoomDatabase {
   public abstract SpinDao getSpinDao();
 
   public abstract WagerDao getWagerDao();
+
+  public abstract StatsDao getStatDao();
 
   private static class InstanceHolder {
 
