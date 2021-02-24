@@ -51,6 +51,7 @@
     app:useCompatPadding="true"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
+
     android:src="@drawable/ic_gold_money"/>
 
 
