@@ -5,8 +5,20 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".controller.PlayFragment"
-  android:padding="@dimen/half_static_spacing">
+  android:padding="@dimen/half_static_spacing"
+  tools:context=".controller.PlayFragment">
+
+  <Button
+    android:id="@+id/spin_wheel"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/static_spacing"
+    android:padding="@dimen/static_spacing"
+    android:text="@string/spin_button"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/roulette_value"/>
 
   <ImageView
     android:id="@+id/roulette_wheel"
@@ -20,6 +32,7 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"/>
 
+
   <TextView
     android:id="@+id/roulette_value"
     android:layout_width="wrap_content"
@@ -31,28 +44,15 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/roulette_wheel"/>
 
-
-  <Button
-    android:id="@+id/spin_wheel"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/static_spacing"
-    android:padding="@dimen/static_spacing"
-    android:text="@string/spin_button"
-    app:layout_constraintTop_toBottomOf="@id/roulette_value"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent"/>
-
   <com.google.android.material.floatingactionbutton.FloatingActionButton
     android:id="@+id/place_wager"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:useCompatPadding="true"
+    android:src="@drawable/ic_gold_money"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
 
-    android:src="@drawable/ic_gold_money"/>
+    app:useCompatPadding="true"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

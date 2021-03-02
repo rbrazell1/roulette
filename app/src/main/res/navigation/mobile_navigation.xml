@@ -30,7 +30,7 @@
 
   <fragment
     android:id="@+id/navigation_wager"
-    android:name="edu.cnm.deepdive.roulette.controller.WagerFragment"
     android:label="@string/long_title_wager"
+    android:name="edu.cnm.deepdive.roulette.controller.WagerFragment"
     tools:layout="@layout/fragment_wager"/>
 </navigation>

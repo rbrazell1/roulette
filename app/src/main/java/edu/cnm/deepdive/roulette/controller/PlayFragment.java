@@ -20,13 +20,12 @@ import java.security.SecureRandom;
 
 public class PlayFragment extends Fragment {
 
-  private static final int MIN_ROTATION_TIME = 2000;
   public static final int MAX_ROTATION_TIME = 3000;
   public static final int DEGREES_PER_REVOLUTION = 360;
   public static final int MIN_FULL_ROTATIONS = 3;
   public static final int DEGREES_PER_REVOLUTIONS = 360;
   public static final int MAX_FULL_ROTATIONS = 3;
-
+  private static final int MIN_ROTATION_TIME = 2000;
   private PlayViewModel playViewModel;
   private FragmentPlayBinding binding;
   private boolean spinning;
