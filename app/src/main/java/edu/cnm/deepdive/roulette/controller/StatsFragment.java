@@ -28,7 +28,7 @@ public class StatsFragment extends Fragment {
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    statsViewModel = new  ViewModelProvider(this).get(StatsViewModel.class);
+    statsViewModel = new ViewModelProvider(this).get(StatsViewModel.class);
     statsViewModel.getCounts().observe(getViewLifecycleOwner(), (counts) -> {
       //noinspection ConstantConditions
       ArrayAdapter<ValueCount> adapter = new ValueCountAdapter(getContext(), counts);

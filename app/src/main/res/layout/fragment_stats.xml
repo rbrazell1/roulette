@@ -11,37 +11,37 @@
     android:id="@+id/header"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:padding="@dimen/static_spacing"
-    android:gravity="center_vertical"
     android:background="?attr/colorPrimarySurface"
-    app:layout_constraintTop_toTopOf="parent"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent">
+    app:layout_constraintTop_toTopOf="parent">
 
     <TextView
+      style="@style/StatsHeader"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_margin="@dimen/static_spacing"
       android:layout_weight="1"
-      style="@style/StatsHeader"
+      android:layout_margin="@dimen/static_spacing"
       android:text="@string/pocket_header"/>
 
 
     <TextView
+      style="@style/StatsHeader"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_margin="@dimen/static_spacing"
       android:layout_weight="1"
-      style="@style/StatsHeader"
+      android:layout_margin="@dimen/static_spacing"
       android:text="@string/count_header"/>
 
     <TextView
+      style="@style/StatsHeader"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_margin="@dimen/static_spacing"
       android:layout_weight="1"
-      style="@style/StatsHeader"
+      android:layout_margin="@dimen/static_spacing"
       android:text="@string/percent_of_total_header"/>
 
   </LinearLayout>
@@ -50,10 +50,10 @@
     android:id="@+id/counts_list"
     android:layout_width="0dp"
     android:layout_height="0dp"
-    app:layout_constraintTop_toBottomOf="@+id/header"
     app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/header"
     tools:listitem="@layout/item_value_count"/>
 
- </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

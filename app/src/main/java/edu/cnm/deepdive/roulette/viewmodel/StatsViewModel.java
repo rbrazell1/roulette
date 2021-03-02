@@ -14,7 +14,7 @@ public class StatsViewModel extends AndroidViewModel {
 
   public StatsViewModel(Application application) {
     super(application);
-    repository = new SpinRepository(application );
+    repository = new SpinRepository(application);
   }
 
   public LiveData<List<ValueCount>> getCounts() {
