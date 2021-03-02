@@ -30,10 +30,11 @@ public class LoginActivity extends AppCompatActivity {
     service
         .refresh()
         .subscribe(
-            (account) -> {/* TODO update account and switch to main*/},
+            this::updateAndSwitch,
             (throwable) -> {
               binding = ActivityLoginBinding.inflate(getLayoutInflater());
-              binding.signIn.setOnClickListener((v) -> {/* TODO start sign in*/});
+              binding.signIn.setOnClickListener((v) ->
+                  service.startSignIn(this, LOGIN_REQUEST_CODE));
               setContentView(binding.getRoot());
             }
         );
@@ -44,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     if (requestCode == LOGIN_REQUEST_CODE) {
       service
           .completeSignIn(data)
-          .addOnSuccessListener((account) -> {/*TODO update and switch to main activity*/})
+          .addOnSuccessListener(this::updateAndSwitch)
           .addOnFailureListener((throwable) ->
               Snackbar.make(binding.getRoot(), R.string.login_failure,
                   BaseTransientBottomBar.LENGTH_INDEFINITE).show()
@@ -58,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
     // If we have a local data base with a user table update based on login
     startActivity(
         new Intent(this, MainActivity.class)
-        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK)
+            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK)
     );
   }
 
