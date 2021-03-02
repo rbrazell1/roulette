@@ -13,6 +13,7 @@
   <string name="count_header">Count</string>
   <string name="percent_of_total_header">% of total</string>
   <string name="login_failure">Unable to sign in</string>
+  <string name="sign_out_text">Sign Out</string>
   <!-- TODO: Remove or change this placeholder text -->
   <string-array name="pocket_values">
 
