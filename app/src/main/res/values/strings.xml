@@ -19,6 +19,12 @@
   <string name="minimum_wager_key">minimum_wager_key</string>
   <string name="minimum_wager_title">Minimum wager</string>
   <string name="minimum_wager_summary">Wager set or added when clicking on a specific wager location</string>
+  <string name="starting_pot_key">starting_pot_key</string>
+  <string name="starting_pot_title">Starting pot</string>
+  <string name="starting_pot_summary">amount of chips available at the start of a new game</string>
+  <string name="let_it_ride_key">let_it_ride_key</string>
+  <string name="let_it_ride_title">Let It Ride!</string>
+  <string name="let_it_ride_summary">Controls weather a winning wager will be let on the bets from the previous round</string>
   <!-- TODO: Remove or change this placeholder text -->
   <string-array name="pocket_values">
 
