@@ -2,6 +2,9 @@ package edu.cnm.deepdive.roulette.controller;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -36,6 +39,7 @@ public class PlayFragment extends Fragment {
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     rng = new SecureRandom();
+    setHasOptionsMenu(true);
   }
 
   public View onCreateView(@NonNull LayoutInflater inflater,
@@ -47,6 +51,25 @@ public class PlayFragment extends Fragment {
           .navigate(PlayFragmentDirections.actionNavigationPlayToNavigationWager());
     });
     return binding.getRoot();
+  }
+
+  @Override
+  public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+    inflater.inflate(R.menu.play_options, menu);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    boolean handled = true;
+    switch (item.getItemId()) {
+      case R.id.new_game:
+        playViewModel.newGame();
+        break;
+      default:
+        handled = super.onOptionsItemSelected(item);
+        break;
+    }
+    return handled;
   }
 
   private void spinWheel() {

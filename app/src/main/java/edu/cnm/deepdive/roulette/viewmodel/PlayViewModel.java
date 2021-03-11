@@ -42,7 +42,7 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
     preferenceRepository = new PreferenceRepository(application);
     spinRepository = new SpinRepository(application);
     pending = new CompositeDisposable();
-    startGame();
+    newGame();
   }
 
   public LiveData<String> getRouletteValue() {
@@ -77,7 +77,7 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
     );
   }
 
-  public void startGame() {
+  public void newGame() {
     currentPot.setValue((long)preferenceRepository.getStartingPot());
     pocketIndex.setValue(0);
     rouletteValue.setValue(pocketValues[0]);
