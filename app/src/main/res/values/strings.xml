@@ -25,7 +25,8 @@
   <string name="let_it_ride_key">let_it_ride_key</string>
   <string name="let_it_ride_title">Let It Ride!</string>
   <string name="let_it_ride_summary">Controls weather a winning wager will be let on the bets from the previous round</string>
-  <!-- TODO: Remove or change this placeholder text -->
+  <string name="current_pot_format">$%1%,d</string>
+
   <string-array name="pocket_values">
 
     <item>00</item>

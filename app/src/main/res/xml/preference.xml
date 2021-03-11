@@ -4,35 +4,35 @@
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <SeekBarPreference
-    android:key="@string/minimum_wager_key"
-    app:min="@integer/minimum_wager_min"
-    android:max="@integer/minimum_wager_max"
     android:defaultValue="@integer/minimum_wager_default"
+    android:icon="@drawable/ic_min_wager"
+    android:key="@string/minimum_wager_key"
+    android:max="@integer/minimum_wager_max"
+    android:summary="@string/minimum_wager_summary"
+    android:title="@string/minimum_wager_title"
+    app:min="@integer/minimum_wager_min"
     app:seekBarIncrement="@integer/minimum_wager_increment"
     app:showSeekBarValue="true"
-    android:title="@string/minimum_wager_title"
-    android:summary="@string/minimum_wager_summary"
-    android:icon="@drawable/ic_min_wager"
     />
 
   <SeekBarPreference
-    android:key="@string/starting_pot_key"
-    android:title="@string/starting_pot_title"
-    android:summary="@string/starting_pot_summary"
-    app:min="@integer/starting_pot_min"
-    android:max="@integer/starting_pot_max"
     android:defaultValue="@integer/starting_pot_default"
+    android:icon="@drawable/ic_starting_pot"
+    android:key="@string/starting_pot_key"
+    android:max="@integer/starting_pot_max"
+    android:summary="@string/starting_pot_summary"
+    android:title="@string/starting_pot_title"
+    app:min="@integer/starting_pot_min"
     app:seekBarIncrement="@integer/starting_pot_increment"
     app:showSeekBarValue="true"
-    android:icon="@drawable/ic_starting_pot"
     />
 
   <SwitchPreference
-    android:key="@string/let_it_ride_key"
-    android:title="@string/let_it_ride_title"
-    android:summary="@string/let_it_ride_summary"
     android:defaultValue="@bool/let_it_ride_default"
     android:icon="@drawable/ic_stack_of_coins"
+    android:key="@string/let_it_ride_key"
+    android:summary="@string/let_it_ride_summary"
+    android:title="@string/let_it_ride_title"
     />
 
 

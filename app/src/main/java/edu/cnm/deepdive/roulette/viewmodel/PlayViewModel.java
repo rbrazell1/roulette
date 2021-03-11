@@ -57,6 +57,10 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
     return throwable;
   }
 
+  public MutableLiveData<Long> getCurrentPot() {
+    return currentPot;
+  }
+
   public void spinWheel() {
     int selection = rng.nextInt(pocketValues.length);
     pocketIndex.setValue(selection);
