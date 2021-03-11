@@ -27,6 +27,7 @@
   <string name="let_it_ride_summary">Controls weather a winning wager will be let on the bets from the previous round</string>
   <string name="current_pot_format">$%,d</string>
   <string name="new_game">New Game</string>
+  <string name="roulette_wheel_description">This is the image of the roulette wheel and also the clickable button to activate spin</string>
 
   <string-array name="pocket_values">
 
