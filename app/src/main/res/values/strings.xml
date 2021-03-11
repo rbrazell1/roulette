@@ -28,6 +28,7 @@
   <string name="current_pot_format">$%,d</string>
   <string name="new_game">New Game</string>
   <string name="roulette_wheel_description">This is the image of the roulette wheel and also the clickable button to activate spin</string>
+  <string name="value_percent_format">%.2f</string>
 
   <string-array name="pocket_values">
 

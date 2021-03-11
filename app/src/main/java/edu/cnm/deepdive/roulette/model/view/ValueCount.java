@@ -4,7 +4,9 @@ package edu.cnm.deepdive.roulette.model.view;
 import androidx.room.DatabaseView;
 
 @DatabaseView(
-    "SELECT value, COUNT(*) AS `count` "
+    "SELECT value, "
+        +" COUNT(*) AS `count` , "
+        + "(100.0 * COUNT(*) / (SELECT COUNT(*) FROM spin WHERE value IS NOT NULL)) AS `percent` "
         + "FROM Spin "
         + "WHERE value IS NOT NULL "
         + "GROUP BY value "
@@ -14,6 +16,8 @@ public class ValueCount {
   private String value;
 
   private int count;
+
+  private float percent;
 
   public String getValue() {
     return value;
@@ -29,5 +33,13 @@ public class ValueCount {
 
   public void setCount(int count) {
     this.count = count;
+  }
+
+  public float getPercent() {
+    return percent;
+  }
+
+  public void setPercent(float percent) {
+    this.percent = percent;
   }
 }
