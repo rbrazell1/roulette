@@ -8,6 +8,19 @@
   android:padding="@dimen/half_static_spacing"
   tools:context=".controller.PlayFragment">
 
+  <ImageView
+    android:id="@+id/current_pot_image"
+    android:layout_width="48dp"
+    android:layout_height="48dp"
+    android:src="@drawable/ic_starting_pot"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:padding="@dimen/half_static_spacing"
+    android:layout_marginBottom="@dimen/double_static_spacing"
+    android:layout_marginStart="@dimen/half_static_spacing"
+    app:useCompatPadding="true"/>
+
+
   <Button
     android:id="@+id/spin_wheel"
     android:layout_width="wrap_content"
@@ -51,7 +64,6 @@
     android:src="@drawable/ic_gold_money"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-
     app:useCompatPadding="true"/>
 
 
