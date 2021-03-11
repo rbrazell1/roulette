@@ -12,6 +12,7 @@
     app:showSeekBarValue="true"
     android:title="@string/minimum_wager_title"
     android:summary="@string/minimum_wager_summary"
+    android:icon="@drawable/ic_min_wager"
     />
 
   <SeekBarPreference
@@ -23,6 +24,7 @@
     android:defaultValue="@integer/starting_pot_default"
     app:seekBarIncrement="@integer/starting_pot_increment"
     app:showSeekBarValue="true"
+    android:icon="@drawable/ic_starting_pot"
     />
 
   <SwitchPreference
@@ -30,6 +32,7 @@
     android:title="@string/let_it_ride_title"
     android:summary="@string/let_it_ride_summary"
     android:defaultValue="@bool/let_it_ride_default"
+    android:icon="@drawable/ic_stack_of_coins"
     />
 
 
