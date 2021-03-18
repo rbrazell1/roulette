@@ -7,7 +7,6 @@ import androidx.room.PrimaryKey;
 import java.util.Date;
 
 @Entity
-
 public class Spin {
 
   @PrimaryKey(autoGenerate = true)
