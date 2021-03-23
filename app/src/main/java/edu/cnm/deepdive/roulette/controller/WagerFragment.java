@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.roulette.controller;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,9 @@ public class WagerFragment extends Fragment {
         false);
     layoutManager.setSpanSizeLookup(new WagerSpanLookup());
     binding.wagerSpaces.setLayoutManager(layoutManager);
-    binding.wagerSpaces.setAdapter(new WagerSpaceAdapter(getContext()));
+    binding.wagerSpaces.setAdapter(new WagerSpaceAdapter(getContext(),
+        (view, position, value) -> Log.d(getClass().getName(),value + "clicked"),
+        (view, position, value) -> Log.d(getClass().getName(),value + "longPressed")));
     return binding.getRoot();
   }
 
