@@ -48,7 +48,7 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
     spinRepository = new SpinRepository(application);
     maxWagerAmount = new MutableLiveData<>(preferenceRepository.getMaximumWager());
     pending = new CompositeDisposable();
-    getNewMaxWager();
+    observeMaxWager();
     newGame();
   }
 
@@ -98,23 +98,50 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
     rouletteValue.setValue(pocketValues[0]);
   }
 
+  @SuppressWarnings("ConstantConditions")
   public void incrementWagerAmount(String spaceValue) {
-    // TODO decide what to do about min/max wagerAmount
     Map<String, Integer> wagerAmount = this.wagerAmount.getValue();
-    //noinspection ConstantConditions
-    wagerAmount.put(spaceValue, 1 + wagerAmount.getOrDefault(spaceValue, 0));
-    this.wagerAmount.setValue(wagerAmount);
+    int currentWagers = wagerAmount
+        .getOrDefault(spaceValue, 0);
+    if (currentWagers < maxWagerAmount.getValue()) {
+      wagerAmount.put(spaceValue, 1 + wagerAmount.getOrDefault(spaceValue, 0));
+      this.wagerAmount.setValue(wagerAmount);
+      currentPot.setValue(currentPot.getValue() - 1);
+    }
   }
 
+  @SuppressWarnings("ConstantConditions")
   public void clearWagerAmount(String spaceValue) {
     Map<String, Integer> wagerAmount = this.wagerAmount.getValue();
-    //noinspection ConstantConditions
-    wagerAmount.remove(spaceValue);
-    this.wagerAmount.setValue(wagerAmount);
+    int currentWagers = wagerAmount.getOrDefault(spaceValue, 0);
+    if (currentWagers > 0) {
+      wagerAmount.remove(spaceValue);
+      this.wagerAmount.setValue(wagerAmount);
+      currentPot.setValue(currentWagers + currentPot.getValue());
+    }
   }
 
-  private void getNewMaxWager() {
-    preferenceRepository.maxWager().subscribe(this.maxWagerAmount::postValue);
+  private void observeMaxWager() {
+    preferenceRepository.maxWager().subscribe(this::adjustMaxWager);
+  }
+
+  @SuppressWarnings("ConstantConditions")
+  private void adjustMaxWager(int maxWager) {
+    Map<String, Integer> wagers = this.wagerAmount.getValue();
+    int excess = 0;
+    for (String key :
+        wagers.keySet()) {
+      int wager = wagers.get(key);
+      if (wager > maxWager) {
+        excess += wager - maxWager;
+        wagers.put(key, maxWager);
+      }
+    }
+    if (excess > 0) {
+      this.wagerAmount.postValue(wagers);
+      currentPot.setValue(currentPot.getValue() + excess);
+    }
+    this.maxWagerAmount.postValue(maxWager);
   }
 
   private void handleThrowable(Throwable throwable) {

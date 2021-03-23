@@ -30,6 +30,8 @@
   <string name="roulette_wheel_description">This is the image of the roulette wheel and also the clickable button to activate spin</string>
   <string name="value_percent_format">%.2f</string>
 
+  <string name="current_wager_format">Current Wager = $%d</string>
+
   <string-array name="pocket_values">
 
     <item>00</item>

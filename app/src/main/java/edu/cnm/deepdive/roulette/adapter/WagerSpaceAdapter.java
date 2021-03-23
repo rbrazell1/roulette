@@ -62,6 +62,10 @@ public class WagerSpaceAdapter extends RecyclerView.Adapter<Holder> {
     return maxWager;
   }
 
+  public void setMaxWager(int maxWager) {
+    this.maxWager = maxWager;
+  }
+
   @FunctionalInterface
   public interface OnClickListener {
 
