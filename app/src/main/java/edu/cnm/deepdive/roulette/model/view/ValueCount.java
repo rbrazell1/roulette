@@ -5,7 +5,7 @@ import androidx.room.DatabaseView;
 
 @DatabaseView(
     "SELECT value, "
-        +" COUNT(*) AS `count` , "
+        + " COUNT(*) AS `count` , "
         + "(100.0 * COUNT(*) / (SELECT COUNT(*) FROM spin WHERE value IS NOT NULL)) AS `percent` "
         + "FROM Spin "
         + "WHERE value IS NOT NULL "

@@ -15,6 +15,8 @@ import edu.cnm.deepdive.roulette.service.PreferenceRepository;
 import edu.cnm.deepdive.roulette.service.SpinRepository;
 import io.reactivex.disposables.CompositeDisposable;
 import java.security.SecureRandom;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class PlayViewModel extends AndroidViewModel implements LifecycleObserver {
@@ -24,6 +26,8 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
   private final MutableLiveData<String> rouletteValue;
   private final MutableLiveData<Integer> pocketIndex;
   private final MutableLiveData<Long> currentPot;
+  private final MutableLiveData<Map<String, Integer>> wagerAmount;
+  private final MutableLiveData<Integer> maxWagerAmount;
   private final MutableLiveData<Throwable> throwable;
   private final String[] pocketValues;
   private final Random rng;
@@ -37,10 +41,12 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
     rng = new SecureRandom();
     pocketIndex = new MutableLiveData<>();
     currentPot = new MutableLiveData<>();
+    wagerAmount = new MutableLiveData<>(new HashMap<>());
     throwable = new MutableLiveData<>();
     pocketValues = application.getResources().getStringArray(R.array.pocket_values);
     preferenceRepository = new PreferenceRepository(application);
     spinRepository = new SpinRepository(application);
+    maxWagerAmount = new MutableLiveData<>(preferenceRepository.getMaximumWager());
     pending = new CompositeDisposable();
     newGame();
   }
@@ -61,6 +67,14 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
     return currentPot;
   }
 
+  public LiveData<Map<String, Integer>> getWagerAmount() {
+    return wagerAmount;
+  }
+
+  public MutableLiveData<Integer> getMaxWagerAmount() {
+    return maxWagerAmount;
+  }
+
   public void spinWheel() {
     int selection = rng.nextInt(pocketValues.length);
     pocketIndex.setValue(selection);
@@ -78,9 +92,24 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
   }
 
   public void newGame() {
-    currentPot.setValue((long)preferenceRepository.getStartingPot());
+    currentPot.setValue((long) preferenceRepository.getStartingPot());
     pocketIndex.setValue(0);
     rouletteValue.setValue(pocketValues[0]);
+  }
+
+  public void incrementWagerAmount(String spaceValue) {
+    // TODO decide what to do about min/max wagerAmount
+    Map<String, Integer> wagerAmount = this.wagerAmount.getValue();
+    //noinspection ConstantConditions
+    wagerAmount.put(spaceValue, 1 + wagerAmount.getOrDefault(spaceValue, 0));
+    this.wagerAmount.setValue(wagerAmount);
+  }
+
+  public void clearWagerAmount(String spaceValue) {
+    Map<String, Integer> wagerAmount = this.wagerAmount.getValue();
+    //noinspection ConstantConditions
+    wagerAmount.remove(spaceValue);
+    this.wagerAmount.setValue(wagerAmount);
   }
 
   private void handleThrowable(Throwable throwable) {

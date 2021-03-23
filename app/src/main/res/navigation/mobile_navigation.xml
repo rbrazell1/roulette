@@ -36,8 +36,8 @@
 
   <fragment
     android:id="@+id/navigation_settings"
-    android:name="edu.cnm.deepdive.roulette.controller.SettingsFragment"
     android:label="@string/long_setting_title"
+    android:name="edu.cnm.deepdive.roulette.controller.SettingsFragment"
     tools:layout="@xml/preference"/>
 
 

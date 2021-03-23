@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import edu.cnm.deepdive.roulette.R;
 import edu.cnm.deepdive.roulette.adapter.WagerSpaceAdapter.Holder;
 import edu.cnm.deepdive.roulette.databinding.ItemWagerSpaceBinding;
+import edu.cnm.deepdive.roulette.service.PreferenceRepository;
+import java.util.HashMap;
+import java.util.Map;
 
 public class WagerSpaceAdapter extends RecyclerView.Adapter<Holder> {
 
@@ -18,6 +21,8 @@ public class WagerSpaceAdapter extends RecyclerView.Adapter<Holder> {
   private final OnLongClickListener onLongClickListener;
   private final int[] spaceColors;
   private final String[] spaceValues;
+  private final Map<String, Integer> wagers;
+  private final PreferenceRepository preferenceRepository;
 
   public WagerSpaceAdapter(Context context,
       OnClickListener onClickListener,
@@ -28,6 +33,8 @@ public class WagerSpaceAdapter extends RecyclerView.Adapter<Holder> {
     Resources res = context.getResources();
     spaceColors = res.getIntArray(R.array.space_colors);
     spaceValues = res.getStringArray(R.array.space_values);
+    wagers = new HashMap<>();
+    preferenceRepository = new PreferenceRepository(context);
   }
 
 
@@ -49,6 +56,22 @@ public class WagerSpaceAdapter extends RecyclerView.Adapter<Holder> {
     return spaceColors.length;
   }
 
+  public Map<String, Integer> getWagers() {
+    return wagers;
+  }
+
+  @FunctionalInterface
+  public interface OnClickListener {
+
+    void onClick(View view, int position, String value);
+  }
+
+  @FunctionalInterface
+  public interface OnLongClickListener {
+
+    void onLongClick(View view, int position, String value);
+  }
+
   class Holder extends RecyclerView.ViewHolder {
 
     private final ItemWagerSpaceBinding binding;
@@ -61,23 +84,16 @@ public class WagerSpaceAdapter extends RecyclerView.Adapter<Holder> {
     private void bind(int position) {
       itemView.setBackgroundColor(spaceColors[position]);
       binding.value.setText(spaceValues[position]);
+      binding.wagerAmount.setMax(preferenceRepository.getMaximumWager());
+      //noinspection ConstantConditions
+      binding.wagerAmount.setProgress(wagers.getOrDefault(spaceValues[position], 0));
       itemView.setOnClickListener((v) ->
-          onClickListener.onClick(v , position, spaceValues[position]));
+          onClickListener.onClick(v, position, spaceValues[position]));
       itemView.setOnLongClickListener((v) -> {
-        onLongClickListener.onLongClick(v,position,spaceValues[position]);
+        onLongClickListener.onLongClick(v, position, spaceValues[position]);
         return true;
       });
     }
-  }
-
-  @FunctionalInterface
-  public interface OnClickListener {
-    void onClick(View view, int position, String value);
-  }
-
-  @FunctionalInterface
-  public interface OnLongClickListener {
-    void onLongClick(View view, int position, String value);
   }
 
 

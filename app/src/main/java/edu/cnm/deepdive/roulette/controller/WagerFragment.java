@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import edu.cnm.deepdive.roulette.adapter.WagerSpaceAdapter;
 import edu.cnm.deepdive.roulette.databinding.FragmentWagerBinding;
 import edu.cnm.deepdive.roulette.viewmodel.PlayViewModel;
+import java.util.Map;
 
 
 public class WagerFragment extends Fragment {
@@ -28,18 +29,21 @@ public class WagerFragment extends Fragment {
   // TODO: Rename and change types of parameters
   private String mParam1;
   private String mParam2;
+  private WagerSpaceAdapter adapter;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     binding = FragmentWagerBinding.inflate(inflater, container, false);
-    GridLayoutManager layoutManager = new GridLayoutManager(getContext(), FULL_WIDTH, LinearLayoutManager.VERTICAL,
+    GridLayoutManager layoutManager = new GridLayoutManager(getContext(), FULL_WIDTH,
+        LinearLayoutManager.VERTICAL,
         false);
     layoutManager.setSpanSizeLookup(new WagerSpanLookup());
     binding.wagerSpaces.setLayoutManager(layoutManager);
-    binding.wagerSpaces.setAdapter(new WagerSpaceAdapter(getContext(),
-        (view, position, value) -> Log.d(getClass().getName(),value + "clicked"),
-        (view, position, value) -> Log.d(getClass().getName(),value + "longPressed")));
+    adapter = new WagerSpaceAdapter(getContext(),
+        (view, position, value) -> viewModel.incrementWagerAmount(value),
+        (view, position, value) -> Log.d(getClass().getName(), value + "longPressed"));
+    binding.wagerSpaces.setAdapter(adapter);
     return binding.getRoot();
   }
 
@@ -47,6 +51,12 @@ public class WagerFragment extends Fragment {
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     viewModel = new ViewModelProvider(getActivity()).get(PlayViewModel.class);
+    viewModel.getWagerAmount().observe(getViewLifecycleOwner(), (wagers) -> {
+      Map<String, Integer> oldwager = adapter.getWagers();
+      oldwager.clear();
+      oldwager.putAll(wagers);
+      adapter.notifyDataSetChanged();
+    });
     //TODO Observe viewmodel livedata as needed
   }
 

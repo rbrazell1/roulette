@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         .signOut()
         .addOnCompleteListener((ignored) -> startActivity(
             new Intent(this, LoginActivity.class)
-            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK)
         ));
   }
 }
