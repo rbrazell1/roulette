@@ -48,6 +48,7 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
     spinRepository = new SpinRepository(application);
     maxWagerAmount = new MutableLiveData<>(preferenceRepository.getMaximumWager());
     pending = new CompositeDisposable();
+    getNewMaxWager();
     newGame();
   }
 
@@ -110,6 +111,10 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
     //noinspection ConstantConditions
     wagerAmount.remove(spaceValue);
     this.wagerAmount.setValue(wagerAmount);
+  }
+
+  private void getNewMaxWager() {
+    preferenceRepository.maxWager().subscribe(this.maxWagerAmount::postValue);
   }
 
   private void handleThrowable(Throwable throwable) {

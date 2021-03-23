@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import edu.cnm.deepdive.roulette.R;
 import edu.cnm.deepdive.roulette.adapter.WagerSpaceAdapter.Holder;
 import edu.cnm.deepdive.roulette.databinding.ItemWagerSpaceBinding;
-import edu.cnm.deepdive.roulette.service.PreferenceRepository;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +21,7 @@ public class WagerSpaceAdapter extends RecyclerView.Adapter<Holder> {
   private final int[] spaceColors;
   private final String[] spaceValues;
   private final Map<String, Integer> wagers;
-  private final PreferenceRepository preferenceRepository;
+  private int maxWager = 100;
 
   public WagerSpaceAdapter(Context context,
       OnClickListener onClickListener,
@@ -34,7 +33,6 @@ public class WagerSpaceAdapter extends RecyclerView.Adapter<Holder> {
     spaceColors = res.getIntArray(R.array.space_colors);
     spaceValues = res.getStringArray(R.array.space_values);
     wagers = new HashMap<>();
-    preferenceRepository = new PreferenceRepository(context);
   }
 
 
@@ -58,6 +56,10 @@ public class WagerSpaceAdapter extends RecyclerView.Adapter<Holder> {
 
   public Map<String, Integer> getWagers() {
     return wagers;
+  }
+
+  public int getMaxWager() {
+    return maxWager;
   }
 
   @FunctionalInterface
@@ -84,7 +86,7 @@ public class WagerSpaceAdapter extends RecyclerView.Adapter<Holder> {
     private void bind(int position) {
       itemView.setBackgroundColor(spaceColors[position]);
       binding.value.setText(spaceValues[position]);
-      binding.wagerAmount.setMax(preferenceRepository.getMaximumWager());
+      binding.wagerAmount.setMax(maxWager);
       //noinspection ConstantConditions
       binding.wagerAmount.setProgress(wagers.getOrDefault(spaceValues[position], 0));
       itemView.setOnClickListener((v) ->

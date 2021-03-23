@@ -1,17 +1,19 @@
 package edu.cnm.deepdive.roulette.controller;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import edu.cnm.deepdive.roulette.R;
 import edu.cnm.deepdive.roulette.adapter.WagerSpaceAdapter;
 import edu.cnm.deepdive.roulette.databinding.FragmentWagerBinding;
 import edu.cnm.deepdive.roulette.viewmodel.PlayViewModel;
@@ -42,7 +44,12 @@ public class WagerFragment extends Fragment {
     binding.wagerSpaces.setLayoutManager(layoutManager);
     adapter = new WagerSpaceAdapter(getContext(),
         (view, position, value) -> viewModel.incrementWagerAmount(value),
-        (view, position, value) -> Log.d(getClass().getName(), value + "longPressed"));
+        (view, position, value) -> {
+          PopupMenu menu = new PopupMenu(getContext(), view);
+          MenuInflater menuInflater = menu.getMenuInflater();
+          menuInflater.inflate(R.menu.wager_actions, menu.getMenu());
+          menu.show();
+        });
     binding.wagerSpaces.setAdapter(adapter);
     return binding.getRoot();
   }
@@ -52,9 +59,13 @@ public class WagerFragment extends Fragment {
     super.onViewCreated(view, savedInstanceState);
     viewModel = new ViewModelProvider(getActivity()).get(PlayViewModel.class);
     viewModel.getWagerAmount().observe(getViewLifecycleOwner(), (wagers) -> {
-      Map<String, Integer> oldwager = adapter.getWagers();
-      oldwager.clear();
-      oldwager.putAll(wagers);
+      Map<String, Integer> oldWager = adapter.getWagers();
+      oldWager.clear();
+      oldWager.putAll(wagers);
+      adapter.notifyDataSetChanged();
+    });
+    viewModel.getMaxWagerAmount().observe(getViewLifecycleOwner(), (maxWager) -> {
+      adapter.getMaxWager();
       adapter.notifyDataSetChanged();
     });
     //TODO Observe viewmodel livedata as needed

@@ -3,9 +3,12 @@ package edu.cnm.deepdive.roulette.service;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Resources;
 import androidx.preference.PreferenceManager;
 import edu.cnm.deepdive.roulette.R;
+import io.reactivex.Observable;
+
 
 public class PreferenceRepository {
 
@@ -33,6 +36,17 @@ public class PreferenceRepository {
   public boolean isLetItRide() {
     return preferences.getBoolean(resources.getString(R.string.let_it_ride_key),
         resources.getBoolean(R.bool.let_it_ride_default));
+  }
+
+  public Observable<Integer> maxWager() {
+    return Observable.create((emitter) -> {
+      OnSharedPreferenceChangeListener listener = (prefs, key) -> {
+       if (key.equals(resources.getString(R.string.maximum_wager_key))) {
+         emitter.onNext(prefs.getInt(key, resources.getInteger(R.integer.maximum_wager_default)));
+       }
+      };
+      preferences.registerOnSharedPreferenceChangeListener(listener);
+    });
   }
 
 }
