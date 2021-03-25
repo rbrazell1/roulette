@@ -1,10 +1,8 @@
 package edu.cnm.deepdive.roulette.model.entity;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import edu.cnm.deepdive.roulette.model.type.Color;
 
@@ -30,14 +28,11 @@ public class Wager {
 
   private String value;
 
-  private boolean row;
-
   private int amount;
 
-  @SuppressWarnings("NotNullFieldNotInitialized")
-  @NonNull
-  @Ignore
-  private Spin spin;
+  private int payout;
+
+  // Getters and Setters
 
   public long getId() {
     return id;
@@ -71,14 +66,6 @@ public class Wager {
     this.value = value;
   }
 
-  public boolean isRow() {
-    return row;
-  }
-
-  public void setRow(boolean row) {
-    this.row = row;
-  }
-
   public int getAmount() {
     return amount;
   }
@@ -87,12 +74,11 @@ public class Wager {
     this.amount = amount;
   }
 
-  @NonNull
-  public Spin getSpin() {
-    return spin;
+  public int getPayout() {
+    return payout;
   }
 
-  public void setSpin(@NonNull Spin spin) {
-    this.spin = spin;
+  public void setPayout(int payout) {
+    this.payout = payout;
   }
 }

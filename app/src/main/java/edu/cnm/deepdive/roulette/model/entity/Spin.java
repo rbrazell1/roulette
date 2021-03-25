@@ -20,6 +20,8 @@ public class Spin {
   @ColumnInfo(index = true)
   private String value;
 
+  // Getters and Setters
+
   public long getId() {
     return id;
   }

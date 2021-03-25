@@ -10,8 +10,10 @@ import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.OnLifecycleEvent;
+import edu.cnm.deepdive.roulette.model.dto.ColorDto;
 import edu.cnm.deepdive.roulette.model.dto.PocketDto;
 import edu.cnm.deepdive.roulette.model.dto.WagerSpot;
+import edu.cnm.deepdive.roulette.model.entity.Wager;
 import edu.cnm.deepdive.roulette.model.pojo.SpinWithWagers;
 import edu.cnm.deepdive.roulette.service.ConfigurationRepository;
 import edu.cnm.deepdive.roulette.service.PreferenceRepository;
@@ -93,21 +95,48 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
   }
 
   public void spinWheel() {
-    List<PocketDto> pocketDtoList = this.pocketDtoList.getValue();
-    @SuppressWarnings("ConstantConditions")
-    int selection = rng.nextInt(pocketDtoList.size());
-    pocketIndex.setValue(selection);
-    rouletteValue.setValue(pocketDtoList.get(selection));
-    SpinWithWagers spin = new SpinWithWagers();
-    spin.setValue(pocketDtoList.get(selection).getName());
+    SpinWithWagers spin = generateOutcome();
     pending.add(
         spinRepository.save(spin)
             .subscribe(
-                (spinWithWagers) -> {
-                },
+                this::update,
                 this::handleThrowable
             )
     );
+  }
+
+  @SuppressWarnings("ConstantConditions")
+  private SpinWithWagers generateOutcome() {
+    List<PocketDto> pocketDtoList = this.pocketDtoList.getValue();
+    @SuppressWarnings("ConstantConditions")
+    int selection = rng.nextInt(pocketDtoList.size());
+    PocketDto pocket = pocketDtoList.get(selection);
+    ColorDto color = pocket.getColorDto();
+    Map<WagerSpot, Integer> wagers = this.wagerAmount.getValue();
+    SpinWithWagers spin = new SpinWithWagers();
+    spin.setValue(pocket.getName());
+    for (Map.Entry<WagerSpot, Integer> wagerEntry : wagers.entrySet()) {
+      WagerSpot spot = wagerEntry.getKey();
+      int amount = wagerEntry.getValue();
+      if (amount > 0) {
+        int payout = 0;
+        Wager wager = new Wager();
+        wager.setAmount(amount);
+        if (spot instanceof PocketDto) {
+          wager.setValue(spot.getName());
+        } else {
+          wager.setColor(((ColorDto) spot).getColor());
+        }
+        if (spot.equals(pocket) || spot.equals(color)) {
+          payout = amount * spot.getPayout();
+        }
+        wager.setPayout(payout);
+        spin.getWagers().add(wager);
+      }
+    }
+    pocketIndex.setValue(selection);
+    rouletteValue.setValue(pocket);
+    return spin;
   }
 
   @SuppressWarnings("ConstantConditions")
@@ -142,6 +171,19 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
       this.wagerAmount.setValue(wagerAmount);
       currentPot.setValue(currentWagers + currentPot.getValue());
     }
+  }
+
+  @SuppressWarnings("ConstantConditions")
+  private void update(SpinWithWagers spin) {
+    long currentPot = this.currentPot.getValue();
+    for (Wager wager : spin.getWagers()) {
+      currentPot += wager.getPayout();
+    }
+    this.currentPot.postValue(currentPot);
+    //FIXME Doesn't use let it ride
+    Map<WagerSpot, Integer> wagers = this.wagerAmount.getValue();
+    wagers.clear();
+    this.wagerAmount.postValue(wagers);
   }
 
   @SuppressLint("CheckResult")
