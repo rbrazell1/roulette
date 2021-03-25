@@ -101,6 +101,12 @@ public class PlayFragment extends Fragment {
         binding.currentPotValue.setText(getString(R.string.current_pot_format, pot)));
   }
 
+  @Override
+  public void onStop() {
+    binding.rouletteWheel.clearAnimation();
+    super.onStop();
+  }
+
   private void rotateToPocket(Integer pocketIndex) {
     float finalRotation = -360 * pocketIndex / 38f;
     if (spinning) {

@@ -27,10 +27,10 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/half_static_spacing"
     android:adjustViewBounds="true"
-    android:scaleType="fitCenter"
     android:clickable="true"
-    android:focusable="true"
     android:contentDescription="@string/roulette_wheel_description"
+    android:focusable="true"
+    android:scaleType="fitCenter"
     android:src="@drawable/roulette_wheel"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
@@ -53,12 +53,12 @@
     android:id="@+id/roulette_value"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textSize="32sp"
     android:includeFontPadding="false"
-    app:layout_constraintTop_toTopOf="@id/roulette_wheel"
+    android:textSize="32sp"
     app:layout_constraintBottom_toBottomOf="@id/roulette_wheel"
     app:layout_constraintEnd_toEndOf="@id/roulette_wheel"
-    app:layout_constraintStart_toStartOf="@id/roulette_wheel"/>
+    app:layout_constraintStart_toStartOf="@id/roulette_wheel"
+    app:layout_constraintTop_toTopOf="@id/roulette_wheel"/>
 
   <com.google.android.material.floatingactionbutton.FloatingActionButton
     android:id="@+id/place_wager"
