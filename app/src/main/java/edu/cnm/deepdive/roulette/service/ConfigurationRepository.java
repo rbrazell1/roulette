@@ -30,7 +30,7 @@ public class ConfigurationRepository {
     }
   }
 
-  public static void ConfigurationRepository(Context context) {
+  public static void setContext(Context context) {
     ConfigurationRepository.context = context;
   }
 

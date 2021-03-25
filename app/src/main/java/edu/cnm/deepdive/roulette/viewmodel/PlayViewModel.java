@@ -47,7 +47,7 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
     throwable = new MutableLiveData<>();
     pocketValues = application.getResources().getStringArray(R.array.pocket_values);
     preferenceRepository = new PreferenceRepository(application);
-    configurationRepository = new ConfigurationRepository.getInstance();
+    configurationRepository = ConfigurationRepository.getInstance();
     spinRepository = new SpinRepository(application);
     maxWagerAmount = new MutableLiveData<>(preferenceRepository.getMaximumWager());
     pending = new CompositeDisposable();
