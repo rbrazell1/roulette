@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.OnLifecycleEvent;
 import edu.cnm.deepdive.roulette.R;
 import edu.cnm.deepdive.roulette.model.pojo.SpinWithWagers;
+import edu.cnm.deepdive.roulette.service.ConfigurationRepository;
 import edu.cnm.deepdive.roulette.service.PreferenceRepository;
 import edu.cnm.deepdive.roulette.service.SpinRepository;
 import io.reactivex.disposables.CompositeDisposable;
@@ -32,6 +33,7 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
   private final String[] pocketValues;
   private final Random rng;
   private final PreferenceRepository preferenceRepository;
+  private final ConfigurationRepository configurationRepository;
   private final SpinRepository spinRepository;
   private final CompositeDisposable pending;
 
@@ -45,6 +47,7 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
     throwable = new MutableLiveData<>();
     pocketValues = application.getResources().getStringArray(R.array.pocket_values);
     preferenceRepository = new PreferenceRepository(application);
+    configurationRepository = new ConfigurationRepository.getInstance();
     spinRepository = new SpinRepository(application);
     maxWagerAmount = new MutableLiveData<>(preferenceRepository.getMaximumWager());
     pending = new CompositeDisposable();

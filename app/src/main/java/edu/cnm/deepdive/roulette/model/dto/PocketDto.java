@@ -5,60 +5,62 @@ import com.google.gson.annotations.Expose;
 public class PocketDto {
 
   @Expose
-  private String label;
+  private String name;
 
   @Expose
-  private int wheelPosition;
+  private int Position;
 
   @Expose
-  private int wagerPosition;
+  private int spot;
 
   @Expose
-  private int wagerSpan;
+  private int span;
 
   @Expose
-  private int color;
+  private String color;
 
   @Expose
   private int payout;
 
-  public String getLabel() {
-    return label;
+  private ColorDto colorDto;
+
+  public String getName() {
+    return name;
   }
 
-  public void setLabel(String label) {
-    this.label = label;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public int getWheelPosition() {
-    return wheelPosition;
+  public int getPosition() {
+    return Position;
   }
 
-  public void setWheelPosition(int wheelPosition) {
-    this.wheelPosition = wheelPosition;
+  public void setPosition(int position) {
+    this.Position = position;
   }
 
-  public int getWagerPosition() {
-    return wagerPosition;
+  public int getSpot() {
+    return spot;
   }
 
-  public void setWagerPosition(int wagerPosition) {
-    this.wagerPosition = wagerPosition;
+  public void setSpot(int spot) {
+    this.spot = spot;
   }
 
-  public int getWagerSpan() {
-    return wagerSpan;
+  public int getSpan() {
+    return span;
   }
 
-  public void setWagerSpan(int wagerSpan) {
-    this.wagerSpan = wagerSpan;
+  public void setSpan(int span) {
+    this.span = span;
   }
 
-  public int getColor() {
+  public String getColor() {
     return color;
   }
 
-  public void setColor(int color) {
+  public void setColor(String color) {
     this.color = color;
   }
 
@@ -68,5 +70,13 @@ public class PocketDto {
 
   public void setPayout(int payout) {
     this.payout = payout;
+  }
+
+  public ColorDto getColorDto() {
+    return colorDto;
+  }
+
+  public void setColorDto(ColorDto colorDto) {
+    this.colorDto = colorDto;
   }
 }
