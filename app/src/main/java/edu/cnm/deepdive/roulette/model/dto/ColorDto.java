@@ -3,7 +3,7 @@ package edu.cnm.deepdive.roulette.model.dto;
 import com.google.gson.annotations.Expose;
 import edu.cnm.deepdive.roulette.model.type.Color;
 
-public class ColorDto {
+public class ColorDto implements WagerSpot {
 
   @Expose
   private String name;
@@ -21,12 +21,14 @@ public class ColorDto {
   private int Span;
 
   @Expose
-  private int payout;
+  private int Spot;
 
   @Expose
+  private int payout;
+
   private Color color;
 
-  private PocketDto pocketDto;
+  private WagerSpot pocketDto;
 
   public String getName() {
     return name;
@@ -60,6 +62,15 @@ public class ColorDto {
     this.Span = span;
   }
 
+  @Override
+  public int getSpot() {
+    return Spot;
+  }
+
+  public void setSpot(int spot) {
+    Spot = spot;
+  }
+
   public int getPayout() {
     return payout;
   }
@@ -84,11 +95,11 @@ public class ColorDto {
     this.color = color;
   }
 
-  public PocketDto getPocketDto() {
+  public WagerSpot getPocketDto() {
     return pocketDto;
   }
 
-  public void setPocketDto(PocketDto pocketDto) {
+  public void setPocketDto(WagerSpot pocketDto) {
     this.pocketDto = pocketDto;
   }
 }
