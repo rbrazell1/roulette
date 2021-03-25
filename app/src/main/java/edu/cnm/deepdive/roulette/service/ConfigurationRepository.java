@@ -1,6 +1,6 @@
 package edu.cnm.deepdive.roulette.service;
 
-import android.content.Context;
+import android.app.Application;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import edu.cnm.deepdive.roulette.R;
@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 
 public class ConfigurationRepository {
 
-  private static Context context;
+  private static Application context;
 
   private List<WagerSpot> wagerSpotList;
   private List<PocketDto> pocketDtoList;
@@ -85,7 +85,7 @@ public class ConfigurationRepository {
     return gson.fromJson(reader, ConfigurationDto.class);
   }
 
-  public static void setContext(Context context) {
+  public static void setContext(Application context) {
     ConfigurationRepository.context = context;
   }
 

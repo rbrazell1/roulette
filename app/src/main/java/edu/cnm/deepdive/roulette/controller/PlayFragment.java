@@ -30,10 +30,12 @@ public class PlayFragment extends Fragment {
   public static final int DEGREES_PER_REVOLUTIONS = 360;
   public static final int MAX_FULL_ROTATIONS = 3;
   private static final int MIN_ROTATION_TIME = 2000;
+
   private PlayViewModel playViewModel;
   private FragmentPlayBinding binding;
   private boolean spinning;
   private SecureRandom rng;
+  private int numPockets;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,7 +90,7 @@ public class PlayFragment extends Fragment {
     playViewModel = new ViewModelProvider(getActivity()).get(PlayViewModel.class);
     getLifecycle().addObserver(playViewModel);
     playViewModel.getRouletteValue().observe(getViewLifecycleOwner(),
-        (s) -> binding.rouletteValue.setText(s));
+        (pocket) -> binding.rouletteValue.setText(pocket.getName()));
     playViewModel.getPocketIndex().observe(getViewLifecycleOwner(), this::rotateToPocket);
     playViewModel.getThrowable().observe(getViewLifecycleOwner(), (throwable) -> {
       if (throwable != null) {
@@ -99,6 +101,9 @@ public class PlayFragment extends Fragment {
     });
     playViewModel.getCurrentPot().observe(getViewLifecycleOwner(), (pot) ->
         binding.currentPotValue.setText(getString(R.string.current_pot_format, pot)));
+    playViewModel.getPocketDtoList().observe(getViewLifecycleOwner(), (pockets) -> {
+          numPockets = pockets.size();
+        });
   }
 
   @Override
@@ -108,7 +113,7 @@ public class PlayFragment extends Fragment {
   }
 
   private void rotateToPocket(Integer pocketIndex) {
-    float finalRotation = -360 * pocketIndex / 38f;
+    float finalRotation = -DEGREES_PER_REVOLUTIONS * pocketIndex / 38f;
     if (spinning) {
       float centerX = binding.rouletteWheel.getWidth() / 2f;
       float centerY = binding.rouletteWheel.getHeight() / 2f;

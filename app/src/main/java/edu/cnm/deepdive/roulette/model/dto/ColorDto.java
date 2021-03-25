@@ -1,7 +1,9 @@
 package edu.cnm.deepdive.roulette.model.dto;
 
+import androidx.annotation.Nullable;
 import com.google.gson.annotations.Expose;
 import edu.cnm.deepdive.roulette.model.type.Color;
+import java.util.Objects;
 
 public class ColorDto implements WagerSpot {
 
@@ -18,17 +20,23 @@ public class ColorDto implements WagerSpot {
   private int Position;
 
   @Expose
-  private int Span;
+  private int span;
 
   @Expose
-  private int Spot;
+  private int spot;
 
   @Expose
   private int payout;
 
   private Color color;
 
+  private boolean hashComputed;
+
+  private int hash;
+
   private WagerSpot pocketDto;
+
+  // Gettters and Setters
 
   public String getName() {
     return name;
@@ -55,20 +63,19 @@ public class ColorDto implements WagerSpot {
   }
 
   public int getSpan() {
-    return Span;
+    return span;
   }
 
   public void setSpan(int span) {
-    this.Span = span;
+    this.span = span;
   }
 
-  @Override
   public int getSpot() {
-    return Spot;
+    return spot;
   }
 
   public void setSpot(int spot) {
-    Spot = spot;
+    spot = spot;
   }
 
   public int getPayout() {
@@ -101,6 +108,27 @@ public class ColorDto implements WagerSpot {
 
   public void setPocketDto(WagerSpot pocketDto) {
     this.pocketDto = pocketDto;
+  }
+
+  @Override
+  public int hashCode() {
+    if (!hashComputed) {
+      hash = Objects.hash(name, spot);
+      hashComputed = true;
+    }
+    return hash;
+  }
+
+  @Override
+  public boolean equals(@Nullable Object obj) {
+    boolean equal = false;
+    if (this == obj) {
+      equal = true;
+    } else if (obj instanceof ColorDto) {
+      ColorDto other = (ColorDto) obj;
+      equal = name.equals(other.name) && spot == other.spot;
+    }
+    return equal;
   }
 }
 

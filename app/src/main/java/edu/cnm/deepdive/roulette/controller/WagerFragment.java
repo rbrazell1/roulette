@@ -14,75 +14,102 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import edu.cnm.deepdive.roulette.R;
-import edu.cnm.deepdive.roulette.adapter.WagerSpaceAdapter;
+import edu.cnm.deepdive.roulette.adapter.WagerSpotAdapter;
 import edu.cnm.deepdive.roulette.databinding.FragmentWagerBinding;
+import edu.cnm.deepdive.roulette.model.dto.WagerSpot;
 import edu.cnm.deepdive.roulette.viewmodel.PlayViewModel;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
 public class WagerFragment extends Fragment {
 
   private static final int FULL_WIDTH = 6;
-  private static final int ZERO_SPACE_WIDTH = 3;
-  private static final int NORMAL_SPACE_WIDTH = 2;
-  private final Map<String, Integer> wagers = new HashMap<>();
+
+  private final Map<WagerSpot, Integer> wagers = new HashMap<>();
+
   private FragmentWagerBinding binding;
   private PlayViewModel viewModel;
+  private WagerSpotAdapter adapter;
+  private int maxWager = 100;
 
-  // TODO: Rename and change types of parameters
-  private String mParam1;
-  private String mParam2;
-  private WagerSpaceAdapter adapter;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     binding = FragmentWagerBinding.inflate(inflater, container, false);
-    GridLayoutManager layoutManager = new GridLayoutManager(getContext(), FULL_WIDTH,
-        LinearLayoutManager.VERTICAL,
-        false);
-    layoutManager.setSpanSizeLookup(new WagerSpanLookup());
-    binding.wagerSpaces.setLayoutManager(layoutManager);
-    adapter = new WagerSpaceAdapter(getContext(),
-        (view, position, value) -> viewModel.incrementWagerAmount(value),
-        (view, position, value) -> showWagerActions(view, value));
-    binding.wagerSpaces.setAdapter(adapter);
     return binding.getRoot();
   }
 
+  @SuppressWarnings("ConstantConditions")
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     viewModel = new ViewModelProvider(getActivity()).get(PlayViewModel.class);
-    viewModel.getWagerAmount().observe(getViewLifecycleOwner(), (updatedWagers) -> {
-      Map<String, Integer> currentWagers = adapter.getWagers();
-      currentWagers.clear();
-      currentWagers.putAll(updatedWagers);
-      adapter.notifyDataSetChanged();
-      this.wagers.clear();
-      this.wagers.putAll(updatedWagers);
-    });
-    viewModel.getMaxWagerAmount().observe(getViewLifecycleOwner(), (maxWager) -> {
-      adapter.setMaxWager(maxWager);
-      adapter.notifyDataSetChanged();
-    });
+    viewModel.getWagerAmount().observe(getViewLifecycleOwner(), this::updateWagers);
+    viewModel.getMaxWagerAmount().observe(getViewLifecycleOwner(), this::updateMaxWager);
+    viewModel.getWagerSpotList().observe(getViewLifecycleOwner(), this::setupAdapter);
     //TODO Observe viewmodel livedata as needed
   }
 
-  private void showWagerActions(View view, String key) {
+  private void updateMaxWager(Integer maxWager) {
+    this.maxWager = maxWager;
+    if (adapter != null) {
+      updateAdapterMaxWager();
+    }
+  }
+
+  private void updateAdapterMaxWager() {
+    adapter.setMaxWager(maxWager);
+    adapter.notifyDataSetChanged();
+  }
+
+  private void setupAdapter(List<WagerSpot> wagerSpotList) {
+    GridLayoutManager layoutManager = new GridLayoutManager(getContext(), FULL_WIDTH,
+        LinearLayoutManager.VERTICAL,
+        false);
+    layoutManager.setSpanSizeLookup(new WagerSpanLookup(wagerSpotList));
+    binding.wagerSpaces.setLayoutManager(layoutManager);
+    adapter = new WagerSpotAdapter(
+        getContext(),
+        wagerSpotList,
+        (v, position, value) -> viewModel.incrementWagerAmount(value),
+        (v, position, value) -> showWagerActions(v, value));
+    binding.wagerSpaces.setAdapter(adapter);
+    updateAdapterWagers();
+    updateAdapterMaxWager();
+  }
+
+  private void updateWagers(Map<WagerSpot, Integer> updatedWagers) {
+    this.wagers.clear();
+    this.wagers.putAll(updatedWagers);
+    if (adapter != null) {
+      updateAdapterWagers();
+    }
+  }
+
+  private void updateAdapterWagers() {
+    Map<WagerSpot, Integer> currentWagers = adapter.getWagers();
+    currentWagers.clear();
+    currentWagers.putAll(wagers);
+    adapter.notifyDataSetChanged();
+  }
+
+  private void showWagerActions(View view, WagerSpot spot) {
+    @SuppressWarnings("ConstantConditions")
     PopupMenu menu = new PopupMenu(getContext(), view);
     MenuInflater menuInflater = menu.getMenuInflater();
     menuInflater.inflate(R.menu.wager_actions, menu.getMenu());
     menu
         .getMenu()
         .findItem(R.id.amount)
-        .setTitle(getString(R.string.current_wager_format, wagers.getOrDefault(key, 0)));
+        .setTitle(getString(R.string.current_wager_format, wagers.getOrDefault(spot, 0)));
     menu
         .getMenu()
         .findItem(R.id.clear)
         .setOnMenuItemClickListener((item) -> {
-          viewModel.clearWagerAmount(key);
+          viewModel.clearWagerAmount(spot);
           return true;
         });
     menu.show();
@@ -90,9 +117,16 @@ public class WagerFragment extends Fragment {
 
   private static class WagerSpanLookup extends SpanSizeLookup {
 
+    private final List<WagerSpot> wagerSpotList;
+
+    private WagerSpanLookup(
+        List<WagerSpot> wagerSpotList) {
+      this.wagerSpotList = wagerSpotList;
+    }
+
     @Override
     public int getSpanSize(int position) {
-      return (position <= 1) ? ZERO_SPACE_WIDTH : NORMAL_SPACE_WIDTH;
+      return wagerSpotList.get(position).getSpan();
     }
   }
 }
