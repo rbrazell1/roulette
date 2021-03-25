@@ -3,8 +3,8 @@
 
   <item
     android:id="@+id/amount"
-    android:title="The amount bet"
-    android:enabled="false"/>
+    android:enabled="false"
+    android:title="The amount bet"/>
 
   <item
     android:id="@+id/clear"

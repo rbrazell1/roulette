@@ -42,9 +42,9 @@ public class PreferenceRepository {
   public Observable<Integer> maxWager() {
     return Observable.create((emitter) -> {
       listener = (prefs, key) -> {
-       if (key.equals(resources.getString(R.string.maximum_wager_key))) {
-         emitter.onNext(prefs.getInt(key, resources.getInteger(R.integer.maximum_wager_default)));
-       }
+        if (key.equals(resources.getString(R.string.maximum_wager_key))) {
+          emitter.onNext(prefs.getInt(key, resources.getInteger(R.integer.maximum_wager_default)));
+        }
       };
       preferences.registerOnSharedPreferenceChangeListener(listener);
     });

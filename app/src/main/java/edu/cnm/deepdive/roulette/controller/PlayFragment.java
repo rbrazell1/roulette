@@ -104,8 +104,8 @@ public class PlayFragment extends Fragment {
     playViewModel.getCurrentPot().observe(lifecycleOwner, (pot) ->
         binding.currentPotValue.setText(getString(R.string.current_pot_format, pot)));
     playViewModel.getPocketDtoList().observe(lifecycleOwner, (pockets) -> {
-          numPockets = pockets.size();
-        });
+      numPockets = pockets.size();
+    });
   }
 
   @Override

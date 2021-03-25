@@ -41,6 +41,14 @@ public class ConfigurationRepository {
     }
   }
 
+  public static void setContext(Application context) {
+    ConfigurationRepository.context = context;
+  }
+
+  public static ConfigurationRepository getInstance() {
+    return InstanceHolder.INSTANCE;
+  }
+
   private void buildWagerSpotList(Map<String, ColorDto> colorDtoMap) {
     wagerSpotList = Stream.concat(
         pocketDtoList.stream(),
@@ -83,14 +91,6 @@ public class ConfigurationRepository {
         .excludeFieldsWithoutExposeAnnotation()
         .create();
     return gson.fromJson(reader, ConfigurationDto.class);
-  }
-
-  public static void setContext(Application context) {
-    ConfigurationRepository.context = context;
-  }
-
-  public static ConfigurationRepository getInstance() {
-    return InstanceHolder.INSTANCE;
   }
 
   public List<WagerSpot> getWagerSpotList() {
