@@ -110,11 +110,15 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
     );
   }
 
+  @SuppressWarnings("ConstantConditions")
   public void newGame() {
     currentPot.setValue((long) preferenceRepository.getStartingPot());
     pocketIndex.setValue(0);
     //noinspection ConstantConditions
     rouletteValue.setValue(pocketDtoList.getValue().get(0));
+    Map<WagerSpot, Integer> wagers = this.wagerAmount.getValue();
+    wagers.clear();
+    this.wagerAmount.setValue(wagers);
   }
 
   @SuppressWarnings("ConstantConditions")
