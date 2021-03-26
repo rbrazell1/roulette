@@ -220,5 +220,6 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
   private void clearPending() {
     pending.clear();
   }
+private float f = 'a';
 
 }

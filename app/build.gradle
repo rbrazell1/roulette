@@ -70,7 +70,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui:$navigationVersion"
 
     // Lifecycle (LiveData & ViewModel)
-    def lifecycleVersion = '2.3.0'
+    def lifecycleVersion = '2.3.1'
     implementation "androidx.lifecycle:lifecycle-runtime:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycleVersion"
