@@ -39,9 +39,13 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
   private final MutableLiveData<Integer> maxWagerAmount;
   private final MutableLiveData<List<WagerSpot>> wagerSpotList;
   private final MutableLiveData<List<PocketDto>> pocketDtoList;
+  private final MutableLiveData<Integer> maxWager;
   private final MutableLiveData<Throwable> throwable;
   private final Random rng;
   private final CompositeDisposable pending;
+
+  private Map<WagerSpot, Integer> pendingWagers;
+  private long pendingCurrentPot;
 
   public PlayViewModel(@NonNull Application application) {
     super(application);
@@ -54,6 +58,7 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
     wagerAmount = new MutableLiveData<>(new HashMap<>());
     maxWagerAmount = new MutableLiveData<>(preferenceRepository.getMaximumWager());
     wagerSpotList = new MutableLiveData<>(configurationRepository.getWagerSpotList());
+    maxWager = new MutableLiveData<>(preferenceRepository.getMaximumWager());
     throwable = new MutableLiveData<>();
     rng = new SecureRandom();
     pocketDtoList = new MutableLiveData<>(configurationRepository.getPocketDtoList());
@@ -115,6 +120,10 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
     Map<WagerSpot, Integer> wagers = this.wagerAmount.getValue();
     SpinWithWagers spin = new SpinWithWagers();
     spin.setValue(pocket.getName());
+    pendingCurrentPot = currentPot.getValue();
+    pendingWagers = new HashMap<>();
+    boolean letItRide = preferenceRepository.isLetItRide();
+    int maxWager = this.maxWager.getValue();
     for (Map.Entry<WagerSpot, Integer> wagerEntry : wagers.entrySet()) {
       WagerSpot spot = wagerEntry.getKey();
       int amount = wagerEntry.getValue();
@@ -127,11 +136,22 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
         } else {
           wager.setColor(((ColorDto) spot).getColor());
         }
-        if (spot.equals(pocket) || spot.equals(color)) {
+        if (spot.equals(pocket)|| spot.equals(color)) {
           payout = amount * spot.getPayout();
         }
         wager.setPayout(payout);
         spin.getWagers().add(wager);
+        if (letItRide) {
+          if (payout > maxWager) {
+            int difference = payout - maxWager;
+            pendingCurrentPot += difference;
+            pendingWagers.put(spot, maxWager);
+          } else {
+            pendingWagers.put(spot, payout);
+          }
+        } else {
+          pendingCurrentPot += payout;
+        }
       }
     }
     pocketIndex.setValue(selection);
@@ -173,18 +193,11 @@ public class PlayViewModel extends AndroidViewModel implements LifecycleObserver
     }
   }
 
-  @SuppressWarnings("ConstantConditions")
-  private void update(SpinWithWagers spin) {
-    long currentPot = this.currentPot.getValue();
-    for (Wager wager : spin.getWagers()) {
-      currentPot += wager.getPayout();
+    @SuppressWarnings("ConstantConditions")
+    private void update(SpinWithWagers spin) {
+      this.currentPot.postValue(pendingCurrentPot);
+      this.wagerAmount.postValue(pendingWagers);
     }
-    this.currentPot.postValue(currentPot);
-    //FIXME Doesn't use let it ride
-    Map<WagerSpot, Integer> wagers = this.wagerAmount.getValue();
-    wagers.clear();
-    this.wagerAmount.postValue(wagers);
-  }
 
   @SuppressLint("CheckResult")
   private void observeMaxWager() {

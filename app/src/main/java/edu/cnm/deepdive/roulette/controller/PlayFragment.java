@@ -122,11 +122,11 @@ public class PlayFragment extends Fragment {
       float currentRotation = binding.rouletteWheel.getRotation();
       binding.rouletteWheel.setPivotX(centerX);
       binding.rouletteWheel.setPivotY(centerY);
-      RotateAnimation rotation = new RotateAnimation(
-          0, (finalRotation - currentRotation)
-          - DEGREES_PER_REVOLUTIONS * (MIN_FULL_ROTATIONS + rng.nextInt(MAX_FULL_ROTATIONS)),
-          centerX, centerY);
-      rotation.setDuration(MIN_ROTATION_TIME + rng.nextInt(MAX_ROTATION_TIME));
+      RotateAnimation rotation = new RotateAnimation(0, (finalRotation - currentRotation)
+          - DEGREES_PER_REVOLUTION * (MIN_FULL_ROTATIONS
+          + rng.nextInt(MAX_FULL_ROTATIONS - MIN_FULL_ROTATIONS + 1)), centerX, centerY);
+      rotation.setDuration(
+          MIN_ROTATION_TIME + rng.nextInt(MAX_ROTATION_TIME - MIN_ROTATION_TIME));
       rotation.setAnimationListener(new AnimationFinalizer(finalRotation));
       binding.rouletteWheel.startAnimation(rotation);
     } else {
@@ -154,6 +154,7 @@ public class PlayFragment extends Fragment {
       spinning = false;
       binding.rouletteWheel.setEnabled(true);
       binding.rouletteValue.setVisibility(View.VISIBLE);
+      binding.currentPotValue.setVisibility(View.VISIBLE);
     }
 
     @Override
