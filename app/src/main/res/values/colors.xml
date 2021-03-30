@@ -8,6 +8,10 @@
   <color name="colorAccent">#FFD700</color>
   <color name="ic_launcher_background">#EAC51F</color>
 
+  <color name="netPositive">#2000FF00</color>
+  <color name="netNegitive">#20FF0000</color>
+  <color name="netZero">#FFFFFF</color>
+
   <color name="blackSpace">#A0000000</color>
   <color name="redSpace">#FFC00000</color>
   <color name="greenSpace">#4C8C4A</color>

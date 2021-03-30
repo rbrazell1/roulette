@@ -80,6 +80,7 @@ public class PlayFragment extends Fragment {
       spinning = true;
       binding.rouletteWheel.setEnabled(false);
       binding.rouletteValue.setVisibility(View.INVISIBLE);
+      binding.currentPotValue.setVisibility(View.INVISIBLE);
       playViewModel.spinWheel();
     }
   }

@@ -9,7 +9,7 @@ public class PocketDto implements WagerSpot {
   private String name;
 
   @Expose
-  private int Position;
+  private int position;
 
   @Expose
   private int spot;
@@ -39,11 +39,11 @@ public class PocketDto implements WagerSpot {
   }
 
   public int getPosition() {
-    return Position;
+    return position;
   }
 
   public void setPosition(int position) {
-    this.Position = position;
+    this.position = position;
   }
 
   @Override
