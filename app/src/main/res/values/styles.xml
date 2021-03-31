@@ -30,4 +30,8 @@
     <item name="android:fontFamily">serif</item>
   </style>
 
+  <style name="columnHeader" parent="TextAppearance.AppCompat.Small">
+    <item name="android:textStyle">bold</item>
+  </style>
+
 </resources>

@@ -120,7 +120,9 @@ android.applicationVariants.all { variant ->
         source = variant.sourceSets.collect { it.java.sourceFiles }.inject { m, i -> m + i }
 
         doFirst {
-            classpath = project.files(variant.javaCompileProvider.get().classpath.files,
+            classpath = project.files(
+                    project.file(projectDir).toPath().resolve("build/intermediates/javac/${variant.name}/classes"),
+                    variant.javaCompileProvider.get().classpath.files,
                     project.android.getBootClasspath())
         }
 
@@ -142,7 +144,7 @@ android.applicationVariants.all { variant ->
 //        set to true to share with other team members
             author = false
             links 'https://docs.oracle.com/javase/8/docs/api/'
-            linksOffline 'https://developer.android.com/reference' , "$projectDir/.."
+            linksOffline 'https://developer.android.com/reference', "$projectDir/.."
         }
 
         failOnError true

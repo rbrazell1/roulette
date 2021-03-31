@@ -33,6 +33,11 @@
   <string name="current_wager_format">Current Wager = $%d</string>
   <string name="positive_format">%,d</string>
   <string name="difference_format">%+,d</string>
+  <string name="date_column">Date</string>
+  <string name="spin_column">Spin</string>
+  <string name="wager_column">Wager</string>
+  <string name="payout_column">Payout</string>
+  <string name="net_gain_column">Net</string>
 
 
 </resources>
