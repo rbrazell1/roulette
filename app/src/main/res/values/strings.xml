@@ -38,6 +38,8 @@
   <string name="wager_column">Wager</string>
   <string name="payout_column">Payout</string>
   <string name="net_gain_column">Net</string>
+  <string name="the_amount_bet">The amount bet</string>
+  <string name="clear_wager">Clear Wager</string>
 
 
 </resources>

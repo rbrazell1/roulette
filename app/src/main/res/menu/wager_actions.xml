@@ -4,10 +4,10 @@
   <item
     android:id="@+id/amount"
     android:enabled="false"
-    android:title="The amount bet"/>
+    android:title="@string/the_amount_bet"/>
 
   <item
     android:id="@+id/clear"
-    android:title="Clear Wager"/>
+    android:title="@string/clear_wager"/>
 
 </menu>
